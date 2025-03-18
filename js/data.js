@@ -16,7 +16,23 @@
  }
  export const up1=(inp)=>{
     inp.forEach((element) => {
-      campaigns1.push(element);
-    });
-    localStorage.setItem('information',JSON.stringify(campaigns1));
+      let flag=0;
+      campaigns1.forEach((loc)=>{
+        if(element.title==loc.title){
+          flag=1;
+          if(element.currentAmount!=loc.currentAmount){
+            loc.currentAmount=element.currentAmount;
+            localStorage.setItem('information',JSON.stringify(campaigns1));
+          }
+        }
+        else{
+          console.log("same");
+        }
+
+       })
+     if(flag==0){
+       campaigns1.push(element);
+       localStorage.setItem('information',JSON.stringify(campaigns1));
+      
+    }})
  }

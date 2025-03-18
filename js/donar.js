@@ -1,5 +1,5 @@
 import { campaigns1 as campaigns } from "./data.js";
-import { get } from "./req.js";
+import { get,req } from "./req.js";
 const campaignsList = document.querySelector('.container');
 
 function renderCampaigns() {
@@ -28,17 +28,23 @@ function renderCampaigns() {
         const donateButton = campaignElement.querySelector('.donate-button');
         donateButton.addEventListener('click', () => {
             const amount = parseFloat(prompt('Enter donation amount:'));
-            if (amount > 0) {
+            let ca=campaigns[index].currentAmount;
+            if (amount > 0&&amount<=campaigns[index].targetAmount-ca) {
                 campaigns[index].currentAmount += amount;
                 renderCampaigns(); 
+                req(campaign);
             }
         });
     });
 }
-
+const asy=async()=>{
+    await get();
+    renderCampaigns();
+}
 if (Array.isArray(campaigns)) {
-    get();
-    renderCampaigns(); 
+    asy();
 } else {
     console.error("Campaigns data is invalid");
 }
+
+

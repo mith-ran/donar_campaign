@@ -1,7 +1,8 @@
 //import { json } from "body-parser"
+let ip="http://192.168.122.102:"
 import { up1 } from "./data.js";
 export const req=async(arr)=>{
-    const response=await fetch("http://172.19.224.1:8080/add-campaign",{
+    const response=await fetch(`${ip}8080/add-campaign`,{
         method:"post",
         headers:{
             "Content-Type":"application/json"
@@ -15,7 +16,7 @@ export const req=async(arr)=>{
 }
 
 export const get = async ()=>{
-    const res=await fetch("http://172.19.224.1:8080/get",{
+    const res=await fetch(`${ip}8080/get`,{
         //method:"get"
     })
     const data =await res.json();

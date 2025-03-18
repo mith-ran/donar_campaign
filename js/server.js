@@ -30,10 +30,21 @@ app.get("/get", (req, res) => {
 // Add a new fundraising campaign
 app.post("/add-campaign", (req, res) => {
     const newCampaign = req.body;
+
+
     if (!newCampaign.title || !newCampaign.targetAmount) {
         return res.status(400).json({ error: "Title and Target Amount are required" });
     }
-
+    let flag=0;
+    campaigns.forEach((campaign) => {
+        if (campaign.title === newCampaign.title) {
+           campaign.currentAmount = newCampaign.currentAmount;
+           flag=1; 
+           //return res.status(201).json({ message: "Campaign updated successfully!" });
+        }
+    });
+    if(flag==0){
+        
     newCampaign.currentAmount = 0; // Set initial amount
     campaigns.push(newCampaign);
 
@@ -41,7 +52,7 @@ app.post("/add-campaign", (req, res) => {
     io.emit("newCampaign", newCampaign);
     console.log(newCampaign)
     res.status(201).json({ message: "Campaign added successfully!" });
-});
+}})
 
 
 io.on("connection", (socket) => {
