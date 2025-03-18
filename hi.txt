@@ -1,0 +1,3 @@
+build a web using htmlcss for fundraising campaingns ans doners can contribute
+campaign creater can create fund camp set target track donation
+doners can browse campdonate and receiveupdate

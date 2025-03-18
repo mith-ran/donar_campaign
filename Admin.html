@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/Admin.css">
+    <link rel="icon" href="img/img.webp">
+    <title> Annai Fundraising </title>
+    
+</head>
+<body>
+    <header>
+        <h1>Annai Fundraising Platform</h1>
+    </header>
+
+    <div class="container">
+        <div class="create-campaign-form">
+            <h2>Create a Campaign</h2>
+            <input type="text" id="campaign-title" placeholder="Campaign Title">
+            <textarea id="campaign-description" placeholder="Campaign Description"></textarea>
+            <input type="number" id="target-amount" placeholder="Target Amount">
+            <button id="create-campaign-button">Create Campaign</button>
+        </div>
+
+        <div id="campaigns-list">
+            </div>
+    </div>
+
+    <script src="js/Admin.js" type="module"></script>
+</body>
+</html>
