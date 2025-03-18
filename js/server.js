@@ -56,7 +56,19 @@ app.post("/add-campaign", (req, res) => {
 
 
 io.on("connection", (socket) => {
-    console.log("A user connected");
+    console.log("A user connected",socket.id);
+    socket.on("newCampaign", (campaign) => {
+        console.log("New campaign added:", campaign);
+        io.emit("newCampaign", campaign);
+    });
+
+    socket.on("donation", (data) => {
+        console.log("Donation received:", data);
+       
+        io.emit("donation", data);
+    })
+
+
 
     socket.on("disconnect", () => {
         console.log("User disconnected");

@@ -1,11 +1,14 @@
 import { up } from "./data.js";
-import { req } from "./req.js";
+import { req,ip } from "./req.js";
+const socket=io(`${ip}8080`)
 const campaigns = [];
 let campaignsList="";
 const ren=()=>{
     const createCampaignButton = document.getElementById('create-campaign-button');
  campaignsList = document.getElementById('campaigns-list');
-
+socket.on("newCampaign", (campaign) => {
+    document.getElementById("fundraising-marquee").innerHTML = `New Campaign Added:- ${campaign.title}`;
+});
 createCampaignButton.addEventListener('click', () => {
     const title = document.getElementById('campaign-title').value;
     const description = document.getElementById('campaign-description').value;
@@ -20,12 +23,12 @@ createCampaignButton.addEventListener('click', () => {
         };
 
         req(campaign)
-
+        socket.emit("newCampaign", campaign);
         campaigns.push(campaign);
 
         let locmem=  up(campaign);
         
-        renderCampaigns();
+   //     renderCampaigns();
         clearForm();
     } else {
         alert('Please fill in all fields and ensure the target amount is positive.');
@@ -34,34 +37,7 @@ createCampaignButton.addEventListener('click', () => {
 
 }
 
-function renderCampaigns() {
-    campaignsList.innerHTML = '';
-    campaigns.forEach((campaign, index) => {
-        const campaignElement = document.createElement('div');
-        campaignElement.classList.add('campaign');
-        campaignElement.innerHTML = `
-            <h2>${campaign.title}</h2>
-            <p>${campaign.description}</p>
-            <div class="progress">
-                <div class="progress-bar" style="width: ${
-                    (campaign.currentAmount / campaign.targetAmount) * 100
-                }%;"></div>
-            </div>
-            <p>Raised: ₹${campaign.currentAmount} / ₹${campaign.targetAmount}</p>
-            <button class="donate-button" data-index="${index}">Donate</button>
-        `;
-        campaignsList.appendChild(campaignElement);
 
-        const donateButton = campaignElement.querySelector('.donate-button');
-        donateButton.addEventListener('click', () => {
-            const amount = parseFloat(prompt('Enter donation amount:'));
-            if (amount > 0) {
-                campaigns[index].currentAmount += amount;
-                renderCampaigns();
-            }
-        });
-    });
-}
 
 function clearForm() {
     document.getElementById('campaign-title').value = '';
@@ -69,4 +45,4 @@ function clearForm() {
     document.getElementById('target-amount').value = '';
 }
 ren();
-renderCampaigns(); 
+ 

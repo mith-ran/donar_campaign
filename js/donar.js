@@ -1,6 +1,10 @@
 import { campaigns1 as campaigns } from "./data.js";
-import { get,req } from "./req.js";
+import { get,req ,ip} from "./req.js";
 const campaignsList = document.querySelector('.container');
+const socket=io(`${ip}8080`)
+socket.on("donation", (campaign) => {
+    document.getElementById("fundraising-marquee").innerHTML = `Donation Received for:- ${campaign.title} plz refresh the page`;
+});
 
 function renderCampaigns() {
     if (!campaignsList) {
@@ -34,6 +38,7 @@ function renderCampaigns() {
                 renderCampaigns(); 
                 req(campaign);
             }
+            socket.emit("donation", campaign);
         });
     });
 }

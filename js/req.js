@@ -1,5 +1,5 @@
 //import { json } from "body-parser"
-let ip="http://192.168.122.102:"
+export const ip="http://192.168.122.102:"
 import { up1 } from "./data.js";
 export const req=async(arr)=>{
     const response=await fetch(`${ip}8080/add-campaign`,{
